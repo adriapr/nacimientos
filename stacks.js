@@ -15,7 +15,7 @@ var x = d3.scale.linear()
 var y = d3.scale.linear()
     .range([height, 0]).nice();
 
-d3.csv("allNacimientos.csv", function(data) {
+d3.csv("./data/allNacimientos.csv", function(data) {
 
   // parse data
   data.forEach(function(d) {
