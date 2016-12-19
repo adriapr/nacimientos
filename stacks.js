@@ -254,7 +254,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<b>Seleccionado:</b><br>" );
 
     selectedText.enter().append("p")
-              .html( function(d){ return printInfo(d)} );
+              .html( function(d){ return printPersonInfo(d)} );
               
 
     // print info about relatives
@@ -269,7 +269,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<b>Posibles padres y/o hijos:</b><br>" );
 
     relativesText.enter().append("p")
-              .html( function(d){ return printInfo(d)} );
+              .html( function(d){ return printPersonInfo(d)} );
               
 
     // print info about people with same surnames
@@ -284,7 +284,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<b>Otras entradas con los mismos apellidos:</b><br>" );
 
     homonimsText.enter().append("p")
-              .html( function(d){ return printInfo(d)} );
+              .html( function(d){ return printPersonInfo(d)} );
               
     
     // set everybody transparent
@@ -340,32 +340,34 @@ d3.csv("./data/allNacimientos.csv", function(data) {
   
   function sameFamily(d, node) {
     
-    return (accentFold(node.NOMMADRE.charAt(0) + node.APELL2MAD).toLowerCase() === accentFold(d.NOMBRE.charAt(0) + d.APELL1 + " " + d.APELL2).toLowerCase()
+    return (accentFold(node.NOMMADRE.substring(0, 3) + node.APELL2MAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
             && d.SEXO == "Mujer" && node.YEAR >= d.YEAR)
-        || (accentFold(node.NOMPADRE.charAt(0) + node.APELL2PAD).toLowerCase() === accentFold(d.NOMBRE.charAt(0) + d.APELL1 + " " + d.APELL2).toLowerCase()
+        || (accentFold(node.NOMPADRE.substring(0, 3) + node.APELL2PAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
             && d.SEXO == "Hombre" && node.YEAR >= d.YEAR)
-        || (accentFold(d.NOMMADRE.charAt(0) + d.APELL2MAD).toLowerCase() === accentFold(node.NOMBRE.charAt(0) + node.APELL1 + " " + node.APELL2).toLowerCase()
+        || (accentFold(d.NOMMADRE.substring(0, 3) + d.APELL2MAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
             && node.SEXO == "Mujer" && d.YEAR >= node.YEAR)
-        || (accentFold(d.NOMPADRE.charAt(0) + d.APELL2PAD).toLowerCase() === accentFold(node.NOMBRE.charAt(0) + node.APELL1 + " " + node.APELL2).toLowerCase()
+        || (accentFold(d.NOMPADRE.substring(0, 3) + d.APELL2PAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
             && node.SEXO == "Hombre" && d.YEAR >= node.YEAR);
   }
 
   function sameName(d, node) {
-    
-    return accentFold(node.APELL1 + " " + node.APELL2).toLowerCase() === accentFold(d.APELL1 + " " + d.APELL2).toLowerCase()
-        || accentFold(node.APELL1 + " " + node.APELL2).toLowerCase() === accentFold(d.APELL1 + " " + d.APELL2).toLowerCase();
+    return accentFold((node.APELL1 + node.APELL2).toLowerCase()) === accentFold((d.APELL1 + d.APELL2).toLowerCase());
   }
   
-  function printInfo(d) {
-    return cssText("pField", "Nombre: ") + cssText("pData", d.NOMBRE)
-            + cssText("pField", "Apellidos: ") + cssText("pData", d.APELL1 + " " + d.APELL2)
-            + cssText("pField", "Fecha Nacimiento: ") + cssText("pData", d.NACIMIENTO)
-            + cssText("pField", "Padre: ") + cssText("pData", d.NOMPADRE + " " + d.APELL2PAD)
-            + cssText("pField", "Madre: ") + cssText("pData", d.NOMMADRE + " " + d.APELL2MAD)
-            + cssText("pField", "Padrino: ") + cssText("pData", d.NPADRINO + " " + d.APELLPADRINO)
-            + cssText("pField", "Madrina: ") + cssText("pData", d.NMADRINA + " " + d.APELLMADRINA) + "<br>"
-            + cssText("pField", "Observacion: ") + cssText("pData", d.OBSERVACN);
+  function printPersonInfo(d) {
+      if (d.SEXO === "Mujer") {
+          strReturn = cssText("pMadre", d.NOMBRE);
+      } else {
+          strReturn = cssText("pPadre", d.NOMBRE);
+      }
+    
+    strReturn = strReturn + cssText("pApellido", d.APELL1 + " " + d.APELL2) + cssText("pNacimiento", " (" + d.NACIMIENTO + ")") + "<br>"
+            + cssText("pField", "Hijo de: ") + cssText("pPadre", d.NOMPADRE + " " + d.APELL2PAD) + " y " + cssText("pMadre", d.NOMMADRE + " " + d.APELL2MAD) + "<br>"
+            + cssText("pObservacion", d.OBSERVACN);
+            
+    return strReturn;
   }
+  
   
   function cssText(c, s) {
     return "<span class=\"" + c + "\">" +
@@ -378,6 +380,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
   }
   
   function accentFold(inStr) {
+    inStr = inStr.replace(/\s/g, ''); // also remove spaces
     return inStr.replace(/([àáâãäå])|([ç])|([èéêë])|([ìíîï])|([ñ])|([òóôõöø])|([ß])|([ùúûü])|([ÿ])|([æ])/g, function(str,a,c,e,i,n,o,s,u,y,ae) { if(a) return 'a'; else if(c) return 'c'; else if(e) return 'e'; else if(i) return 'i'; else if(n) return 'n'; else if(o) return 'o'; else if(s) return 's'; else if(u) return 'u'; else if(y) return 'y'; else if(ae) return 'ae'; });
   }
   

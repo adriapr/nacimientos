@@ -1,5 +1,5 @@
 * {
- font-size: 12px;
+ font-size: 11px;
  font-family: Arial;
 }
 
@@ -9,18 +9,67 @@
  text-align: center;
 }
 
-.pField {
+.pNombre {
+ font-size: 12px;
+ text-align: left;
+ color: #881122;
+}
+
+.pApellido {
  font-size: 12px;
  font-family: Arial;
- text-align: left;
- color: #d2691e;
+ color: #881122;
  font-weight: bold; 
+}
+
+.pNacimiento {
+ font-size: 12px;
+ font-family: Arial;
+ color: #555555;
+ font-weight: bold; 
+}
+
+
+.pPadre {
+ font-size: 12px;
+ font-family: Arial;
+ color: #114477;
+}
+
+.pMadre {
+ font-size: 12px;
+ font-family: Arial;
+ color: #aa5500;
+}
+
+.pPadrino {
+ font-size: 12px;
+ font-family: Arial;
+ color: #114477;
+}
+
+.pMadrina {
+ font-size: 12px;
+ font-family: Arial;
+ color: #aa5500;
+}
+
+.pObservacion {
+ font-size: 12px;
+ font-family: Arial;
+ font-style: italic; 
+ color: #555555;
+}
+
+.pField {
+ font-size: 11px;
+ font-family: Arial;
+ color: #333333;
 }
 
 .pData {
  font-size: 12px;
  font-family: Arial;
- text-align: left;
  color: #2f4f4f;
 }
 
