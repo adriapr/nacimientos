@@ -1,12 +1,64 @@
 * {
- font-size: 11px;
- font-family: Arial;
+ font-size: 12px;
+ font-family: "Lato", sans-serif;
 }
 
+/* Text styles */
 .title {
  font-size: 24px;
- font-family: Arial;
  text-align: center;
+ font-weight: bold; 
+ color: #fff;
+ background-color: #333;
+ margin:0px;
+ padding: 10px;
+}
+
+a:link {
+    color: #C00;
+}
+a:visited {
+    color: #B44;
+}
+a:hover {
+    color: #F00;
+}
+
+input[type=text] {
+    padding: 1px 8px;
+    margin: 6px 0;
+    box-sizing: border-box;
+    border: 1px solid red;
+    border-color: #B66;
+    border-radius: 4px;
+}
+
+.button {
+    background-color: #B44;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    padding: 1px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 6px 24px;
+    cursor: pointer;
+}
+
+.instructions {
+ font-size: 10px;
+ color: #000;
+}
+
+.pGroup {
+ font-size: 12px;
+ text-align: left;
+ font-weight: bold; 
+ color: #fff;
+ background-color: #B44;
+ margin:0px;
+ padding: 4px;
 }
 
 .pNombre {
@@ -17,62 +69,53 @@
 
 .pApellido {
  font-size: 12px;
- font-family: Arial;
  color: #881122;
  font-weight: bold; 
 }
 
 .pNacimiento {
  font-size: 12px;
- font-family: Arial;
  color: #555555;
  font-weight: bold; 
 }
 
-
 .pPadre {
  font-size: 12px;
- font-family: Arial;
  color: #114477;
 }
 
 .pMadre {
  font-size: 12px;
- font-family: Arial;
  color: #aa5500;
 }
 
 .pPadrino {
  font-size: 12px;
- font-family: Arial;
  color: #114477;
 }
 
 .pMadrina {
  font-size: 12px;
- font-family: Arial;
  color: #aa5500;
 }
 
 .pObservacion {
  font-size: 12px;
- font-family: Arial;
  font-style: italic; 
  color: #555555;
 }
 
 .pField {
  font-size: 11px;
- font-family: Arial;
  color: #333333;
 }
 
 .pData {
  font-size: 12px;
- font-family: Arial;
  color: #2f4f4f;
 }
 
+/* Graphic styles */
 rect {
   fill: transparent;
 /*  shape-rendering: crispEdges; */
@@ -108,7 +151,6 @@ rect {
 .d3-tip {
   line-height: 1;
   font-weight: normal;
-  font-family: "sans-serif";  
   padding: 12px;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;

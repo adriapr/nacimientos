@@ -56,9 +56,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
       .attr("class", "d3-tip")
       .offset([-10, 0])
       .html(function(d) {
-        return d.NOMBRE + ", " + d.APELL1 + " " + d.APELL2 + " (" + d.NACIMIENTO + ")<br>Padres: "
-        + d.NOMPADRE + " " + d.APELL2PAD + " | " + d.NOMMADRE + " " + d.APELL2MAD
-        + "<br>OBS:" + fun_wrap(d.OBSERVACN);
+        return d.NOMBRE + "<br><b>" + d.APELL1 + " " + d.APELL2 + "</b><br>" + d.NACIMIENTO;
       });
 
   // zoom behaviour
@@ -251,7 +249,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .data( [node], function(d) { return( JSON.stringify(d) ); } );
               
     d3.select("#personData").append("p")
-              .html( "<b>Seleccionado:</b><br>" );
+              .html( "<div class=\"pGroup\">Seleccionado:</div>" );
 
     selectedText.enter().append("p")
               .html( function(d){ return printPersonInfo(d)} );
@@ -266,7 +264,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .data( relativesData, function(d) { return( JSON.stringify(d) ); } );
               
     d3.select("#personData").append("p")
-              .html( "<b>Posibles padres y/o hijos:</b><br>" );
+              .html( "<div class=\"pGroup\">Possibles padres y/o hijos:</div>" );
 
     relativesText.enter().append("p")
               .html( function(d){ return printPersonInfo(d)} );
@@ -281,7 +279,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .data( homonimsData, function(d) { return( JSON.stringify(d) ); } );
               
     d3.select("#personData").append("p")
-              .html( "<b>Otras entradas con los mismos apellidos:</b><br>" );
+              .html( "<div class=\"pGroup\">Otras entradas con los mismos apellidos:</div>" );
 
     homonimsText.enter().append("p")
               .html( function(d){ return printPersonInfo(d)} );
