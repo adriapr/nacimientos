@@ -9,36 +9,36 @@
  text-align: center;
  font-weight: bold; 
  color: #fff;
- background-color: #333;
+ background-color: #222;
  margin:0px;
- padding: 10px;
+ padding: 12px;
+ border-radius: 4px;
 }
 
 a:link {
     color: #C00;
 }
 a:visited {
-    color: #A55;
+    color: #C00;
 }
 a:hover {
     color: #F00;
 }
 
 input[type=text] {
-    padding: 1px 8px;
+    padding: 3px 8px;
     margin: 6px 0;
     box-sizing: border-box;
-    border: 1px solid red;
-    border-color: #A55;
+    border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .button {
-    background-color: #A55;
+    background-color: #ccc;
     border: none;
-    color: white;
+    color: #222;
     border-radius: 4px;
-    padding: 1px 12px;
+    padding: 3px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -55,10 +55,11 @@ input[type=text] {
  font-size: 12px;
  text-align: left;
  font-weight: bold; 
- color: #fff;
- background-color: #A55;
+ color: #222;
+ background-color: #ccc;
  margin:0px;
  padding: 4px;
+ border-radius: 4px;
 }
 
 .pNombre {
