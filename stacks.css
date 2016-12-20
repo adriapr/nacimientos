@@ -18,7 +18,7 @@ a:link {
     color: #C00;
 }
 a:visited {
-    color: #B44;
+    color: #A55;
 }
 a:hover {
     color: #F00;
@@ -29,12 +29,12 @@ input[type=text] {
     margin: 6px 0;
     box-sizing: border-box;
     border: 1px solid red;
-    border-color: #B66;
+    border-color: #A55;
     border-radius: 4px;
 }
 
 .button {
-    background-color: #B44;
+    background-color: #A55;
     border: none;
     color: white;
     border-radius: 4px;
@@ -56,7 +56,7 @@ input[type=text] {
  text-align: left;
  font-weight: bold; 
  color: #fff;
- background-color: #B44;
+ background-color: #A55;
  margin:0px;
  padding: 4px;
 }
