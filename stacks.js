@@ -252,6 +252,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<div class=\"pGroup\">Seleccionado:</div>" );
 
     selectedText.enter().append("p")
+              .attr('class', 'personInfo')
               .html( function(d){ return printPersonInfo(d)} );
               
 
@@ -267,6 +268,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<div class=\"pGroup\">Possibles padres y/o hijos:</div>" );
 
     relativesText.enter().append("p")
+              .attr('class', 'personInfo')
               .html( function(d){ return printPersonInfo(d)} );
               
 
@@ -282,6 +284,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
               .html( "<div class=\"pGroup\">Otras entradas con los mismos apellidos:</div>" );
 
     homonimsText.enter().append("p")
+              .attr('class', 'personInfo')
               .html( function(d){ return printPersonInfo(d)} );
               
     
@@ -353,19 +356,19 @@ d3.csv("./data/allNacimientos.csv", function(data) {
   }
   
   function printPersonInfo(d) {
-      if (d.SEXO === "Mujer") {
-          strReturn = cssText("pMadre", d.NOMBRE);
-      } else {
-          strReturn = cssText("pPadre", d.NOMBRE);
-      }
     
+    if (d.SEXO === "Mujer") {
+        strReturn = cssText("pMadre", d.NOMBRE);
+    } else {
+        strReturn = cssText("pPadre", d.NOMBRE);
+    }
+
     strReturn = strReturn + cssText("pApellido", d.APELL1 + " " + d.APELL2) + cssText("pNacimiento", " (" + d.NACIMIENTO + ")") + "<br>"
-            + cssText("pField", "Hijo de: ") + cssText("pPadre", d.NOMPADRE + " " + d.APELL2PAD) + " y " + cssText("pMadre", d.NOMMADRE + " " + d.APELL2MAD) + "<br>"
+            + cssText("pField", "Hijo de: ") + cssText("pPadre", d.NOMPADRE + " " + d.APELL2PAD) + cssText("pField", " y ") + cssText("pMadre", d.NOMMADRE + " " + d.APELL2MAD) + "<br>"
             + cssText("pObservacion", d.OBSERVACN);
             
     return strReturn;
   }
-  
   
   function cssText(c, s) {
     return "<span class=\"" + c + "\">" +

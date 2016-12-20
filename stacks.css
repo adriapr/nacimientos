@@ -12,6 +12,16 @@
  background-color: #222;
  margin:0px;
  padding: 12px;
+ border-radius: 6px;
+}
+
+.footer {
+ font-size: 11px;
+ text-align: center;
+ color: #222;
+ background-color: #eee;
+ margin:0px;
+ padding: 4px;
  border-radius: 4px;
 }
 
@@ -60,6 +70,10 @@ input[type=text] {
  margin:0px;
  padding: 4px;
  border-radius: 4px;
+}
+
+.personInfo {
+   margin:8px 14px;
 }
 
 .pNombre {
