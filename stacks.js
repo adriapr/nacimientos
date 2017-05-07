@@ -239,7 +239,7 @@ d3.csv("./data/allNacimientos.csv", function(data) {
 
   function onClick(node) {
     
-//    console.log(node);
+    console.log(node);
     
     // print info about selected person
     d3.select("#personData").selectAll("p").remove();
@@ -339,16 +339,67 @@ d3.csv("./data/allNacimientos.csv", function(data) {
     tip.hide();
   }
   
+	function hasWordMatch(a, b, debug) {
+    if (debug == true) {
+    	console.log(a)
+    	console.log(b)
+    }
+
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+
+    if (debug == true) {
+    	console.log(a)
+    	console.log(b)
+    }
+
+    var a_parts = a.split(' ');
+    var b_parts = b.split(' ');
+    var a_length = a_parts.length;
+    var b_length = b_parts.length;
+    var i_a, i_b;
+
+    for (i_a = 0; i_a < a_length; i_a += 1) {
+        for (i_b = 0; i_b < b_length; i_b += 1) {
+            if (accentFold(a_parts[i_a]) === accentFold(b_parts[i_b])) {
+                return true;
+            }
+        }
+    }
+    return false;
+	}
+
+	function fatherSameSurnames(f, c) // (f)ather (c)hildren
+	{
+		return ( accentFold(c.APELL2PAD).toLowerCase() === accentFold(f.APELL1 + " " + f.APELL2).toLowerCase() )
+				|| ( accentFold(c.APELL2PAD).toLowerCase() === accentFold(f.APELL1).toLowerCase() ) 
+	}
+
+	function motherSameSurnames(m, c) // (m)other (c)hildren
+	{
+		return ( accentFold(c.APELL2MAD).toLowerCase() === accentFold(m.APELL1 + " " + m.APELL2).toLowerCase() )
+				|| ( accentFold(c.APELL2MAD).toLowerCase() === accentFold(m.APELL1).toLowerCase() ) 
+	}
+
+
   function sameFamily(d, node) {
+
+  	// node is the clicked persons, d is all others evaluated.
+  	// APELL2MAD & APELL2PAD might include the second surname or both surnames of the parent
+  	// assume age difference between parent and children is between 10 and 50
+    return ( hasWordMatch(node.NOMMADRE, d.NOMBRE) && motherSameSurnames(d, node) && d.SEXO == "Mujer" && node.YEAR-10 >= d.YEAR && node.YEAR-50 <= d.YEAR)
+				|| ( hasWordMatch(node.NOMPADRE, d.NOMBRE) && fatherSameSurnames(d, node) && d.SEXO == "Hombre" && node.YEAR-10 >= d.YEAR && node.YEAR-50 <= d.YEAR)
+				|| ( hasWordMatch(d.NOMMADRE, node.NOMBRE) && motherSameSurnames(node, d) && node.SEXO == "Mujer" && d.YEAR-10 >= node.YEAR && d.YEAR-50 <= node.YEAR)
+				|| ( hasWordMatch(d.NOMPADRE, node.NOMBRE) && fatherSameSurnames(node, d) && node.SEXO == "Hombre" && d.YEAR-10 >= node.YEAR && d.YEAR-50 <= node.YEAR);
     
-    return (accentFold(node.NOMMADRE.substring(0, 3) + node.APELL2MAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
-            && d.SEXO == "Mujer" && node.YEAR >= d.YEAR)
-        || (accentFold(node.NOMPADRE.substring(0, 3) + node.APELL2PAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
-            && d.SEXO == "Hombre" && node.YEAR >= d.YEAR)
-        || (accentFold(d.NOMMADRE.substring(0, 3) + d.APELL2MAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
-            && node.SEXO == "Mujer" && d.YEAR >= node.YEAR)
-        || (accentFold(d.NOMPADRE.substring(0, 3) + d.APELL2PAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
-            && node.SEXO == "Hombre" && d.YEAR >= node.YEAR);
+    // return (accentFold(node.NOMMADRE.substring(0, 3) + node.APELL2MAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
+    //         && d.SEXO == "Mujer" && node.YEAR >= d.YEAR)
+    //     || (accentFold(node.NOMPADRE.substring(0, 3) + node.APELL2PAD).toLowerCase() === accentFold(d.NOMBRE.substring(0, 3) + d.APELL1 + " " + d.APELL2).toLowerCase()
+    //         && d.SEXO == "Hombre" && node.YEAR >= d.YEAR)
+    //     || (accentFold(d.NOMMADRE.substring(0, 3) + d.APELL2MAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
+    //         && node.SEXO == "Mujer" && d.YEAR >= node.YEAR)
+    //     || (accentFold(d.NOMPADRE.substring(0, 3) + d.APELL2PAD).toLowerCase() === accentFold(node.NOMBRE.substring(0, 3) + node.APELL1 + " " + node.APELL2).toLowerCase()
+    //         && node.SEXO == "Hombre" && d.YEAR >= node.YEAR);
   }
 
   function sameName(d, node) {
