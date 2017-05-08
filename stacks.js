@@ -207,16 +207,38 @@ d3.csv("./data/allNacimientos.csv", function(data) {
     return "translate(" + x(d.YEAR) + "," + y(d.YEAR_ID) + ")";
   }
 
+  function containsWord(d, word) {
+
+  	return accentFold(d.APELL1.toLowerCase()).indexOf( word ) !== -1 
+        || accentFold(d.APELL2.toLowerCase()).indexOf( word ) !== -1
+        || accentFold(d.NOMBRE.toLowerCase()).indexOf( word ) !== -1
+        || accentFold(d.OBSERVACN.toLowerCase()).indexOf( word ) !== -1;
+
+  }
+
+  function containsText(d, filterText) {
+
+    filterText = filterText.toLowerCase();
+
+    var words  = filterText.split(' ');
+    var nWords = words.length;
+    var ii;
+
+    for (ii = 0; ii < nWords; ii += 1) {
+      if ( !containsWord(d, words[ii]) ) {
+      	return false;
+      }
+    }
+
+    return true;
+  }
+
   function onFilter(){
     var filterText =  d3.select('#filterOn').property('value');
     
     if (filterText !== ""){
       var selectedOnes = d3.selectAll(".rect")
-        .filter(function(d) { return accentFold(d.APELL1.toLowerCase()).indexOf( accentFold(filterText.toLowerCase()) ) !== -1 
-                                  || accentFold(d.APELL2.toLowerCase()).indexOf( accentFold(filterText.toLowerCase()) ) !== -1
-                                  || accentFold(d.NOMBRE.toLowerCase()).indexOf( accentFold(filterText.toLowerCase()) ) !== -1
-                                  || accentFold(d.OBSERVACN.toLowerCase()).indexOf( accentFold(filterText.toLowerCase()) ) !== -1
-        });
+        .filter( function(d) { return( containsText(d, filterText) ); } );
 
       d3.selectAll(".linkLine")
         .remove();
@@ -340,18 +362,9 @@ d3.csv("./data/allNacimientos.csv", function(data) {
   }
   
 	function hasWordMatch(a, b, debug) {
-    if (debug == true) {
-    	console.log(a)
-    	console.log(b)
-    }
 
     a = a.toLowerCase();
     b = b.toLowerCase();
-
-    if (debug == true) {
-    	console.log(a)
-    	console.log(b)
-    }
 
     var a_parts = a.split(' ');
     var b_parts = b.split(' ');
